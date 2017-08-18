@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc && echo 'Build successful'",
-    "prepublish": "in-publish && npm run build || not-in-publish",
+    "prepublishOnly": "npm run build",
     "lint": "! tslint --project tsconfig.json -c tslint.json --type-check | sed \"s|$PWD/||\" | grep ERROR"
   },
   "repository": {
