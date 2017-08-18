@@ -1,0 +1,29 @@
+{
+  "name": "denali-adapter-test-suite",
+  "version": "0.1.0",
+  "description": "A test suite for denali orm adapters",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc && echo 'Build successful'",
+    "prepublish": "in-publish && npm run build || not-in-publish",
+    "lint": "! tslint --project tsconfig.json -c tslint.json --type-check | sed \"s|$PWD/||\" | grep ERROR"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denali-js/denali-adapter-test-suite.git"
+  },
+  "author": "Dave Wasmer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denali-js/denali-adapter-test-suite/issues"
+  },
+  "homepage": "https://github.com/denali-js/denali-adapter-test-suite#readme",
+  "devDependencies": {
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.2"
+  },
+  "dependencies": {
+    "denali": "^0.0.30"
+  },
+  "types": "dist/index.d.ts"
+}
