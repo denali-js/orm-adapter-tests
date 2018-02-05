@@ -7,11 +7,12 @@ export default function querying(test: RegisterContextual<any>) {
   // -----------------
 
   test('#idFor() returns the id for the record', async (t) => {
-    let { db } = t.context;
-    let { id } = await db.create('post', { title: 'one' }).save();
+    let { lookup } = t.context;
+    let Post = lookup('model:post');
+    let { id } = await Post.create({ title: 'one' });
 
-    let post = await db.find('post', id);
-    
+    let post = await Post.find(id);
+
     t.is(post.id, id);
   });
 
@@ -20,11 +21,12 @@ export default function querying(test: RegisterContextual<any>) {
   // -----------------
 
   test('#getAttribute() returns the value of the given attriute', async (t) => {
-    let { db } = t.context;
-    let { id } = await db.create('post', { title: 'one' }).save();
+    let { lookup } = t.context;
+    let Post = lookup('model:post');
+    let { id } = await Post.create({ title: 'one' });
 
-    let post = await db.find('post', id);
-    
+    let post = await Post.find(id);
+
     t.is(post.title, 'one');
   });
 
@@ -33,12 +35,13 @@ export default function querying(test: RegisterContextual<any>) {
   // -----------------
 
   test('#setAttribute() sets the value of the given attriute', async (t) => {
-    let { db } = t.context;
-    let { id } = await db.create('post', { title: 'one' }).save();
+    let { lookup } = t.context;
+    let Post = lookup('model:post');
+    let { id } = await Post.create({ title: 'one' });
 
-    let post = await db.find('post', id);
+    let post = await Post.find(id);
     post.title = 'two';
-    
+
     t.is(post.title, 'two');
   });
 

@@ -7,10 +7,12 @@ export default function querying(test: RegisterContextual<any>) {
   // -----------------
 
   test('#createRecord() saves a record', async (t) => {
-    let { db } = t.context;
-    let post = await db.create('post', { title: 'one' }).save();
-    
-    let result = await db.find('post', post.id);
+    let { lookup } = t.context;
+    let Post = lookup('model:post');
+
+    let post = await Post.create({ title: 'one' });
+
+    let result = await Post.find(post.id);
     t.truthy(result);
     t.is(result.id, 1);
     t.is(result.title, 'one');

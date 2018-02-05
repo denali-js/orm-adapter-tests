@@ -23,7 +23,7 @@
     "typescript": "^2.4.2"
   },
   "dependencies": {
-    "denali": "^0.0.30"
+    "denali": "^0.0.x"
   },
   "types": "dist/index.d.ts"
 }

@@ -7,13 +7,15 @@ export default function querying(test: RegisterContextual<any>) {
   // -----------------
 
   test('#getRelated() asynchronously fetches related records', async (t) => {
-    let { db } = t.context;
-    let post = await db.create('post', { title: 'Hello World' }).save();
-    let commentOne = await db.create('comment', { body: 'Great post' }).save();
-    let commentTwo = await db.create('comment', { body: 'Terrible post' }).save();
+    let { lookup } = t.context;
+    let Post = lookup('model:post');
+    let Comment = lookup('model:comment');
+    let post = await Post.create({ title: 'Hello World' });
+    let commentOne = await Comment.create({ body: 'Great post' });
+    let commentTwo = await Comment.create({ body: 'Terrible post' });
     await post.setComments([ commentOne, commentTwo ]);
-    
-    let result = await db.find('post', post.id);
+
+    let result = await Post.find(post.id);
     let commentsResult = await result.getComments();
     t.is(commentsResult.length, 2);
     t.is(commentsResult[0].body, 'Great post');
@@ -24,14 +26,16 @@ export default function querying(test: RegisterContextual<any>) {
   // -----------------
 
   test('#setRelated() asynchronously replaces all existing related records', async (t) => {
-    let { db } = t.context;
-    let post = await db.create('post', { title: 'Hello World' }).save();
-    let commentOne = await db.create('comment', { body: 'Great post' }).save();
-    let commentTwo = await db.create('comment', { body: 'Terrible post' }).save();
-    let commentThree = await db.create('comment', { body: 'Medicore post' }).save();
+    let { lookup } = t.context;
+    let Post = lookup('model:post');
+    let Comment = lookup('model:comment');
+    let post = await Post.create({ title: 'Hello World' });
+    let commentOne = await Comment.create({ body: 'Great post' });
+    let commentTwo = await Comment.create({ body: 'Terrible post' });
+    let commentThree = await Comment.create({ body: 'Medicore post' });
     await post.setComments([ commentOne, commentTwo ]);
-    
-    post = await db.find('post', post.id);
+
+    post = await Post.find(post.id);
     await post.setComments([ commentThree ]);
     let comments = await post.getComments();
     t.is(comments.length, 1);
@@ -43,13 +47,15 @@ export default function querying(test: RegisterContextual<any>) {
   // -----------------
 
   test('#addRelated() asynchronously adds one record to a has many relationship', async (t) => {
-    let { db } = t.context;
-    let post = await db.create('post', { title: 'Hello World' }).save();
-    let commentOne = await db.create('comment', { body: 'Great post' }).save();
-    let commentTwo = await db.create('comment', { body: 'Terrible post' }).save();
+    let { lookup } = t.context;
+    let Post = lookup('model:post');
+    let Comment = lookup('model:comment');
+    let post = await Post.create({ title: 'Hello World' });
+    let commentOne = await Comment.create({ body: 'Great post' });
+    let commentTwo = await Comment.create({ body: 'Terrible post' });
     await post.setComments([ commentOne ]);
-    
-    post = await db.find('post', post.id);
+
+    post = await Post.find(post.id);
     await post.addComment(commentTwo);
     let comments = await post.getComments();
     t.is(comments.length, 2);
@@ -61,13 +67,15 @@ export default function querying(test: RegisterContextual<any>) {
   // -----------------
 
   test('#removeRelated() asynchronously removes one record from a has many relationship', async (t) => {
-    let { db } = t.context;
-    let post = await db.create('post', { title: 'Hello World' }).save();
-    let commentOne = await db.create('comment', { body: 'Great post' }).save();
-    let commentTwo = await db.create('comment', { body: 'Terrible post' }).save();
+    let { lookup } = t.context;
+    let Post = lookup('model:post');
+    let Comment = lookup('model:comment');
+    let post = await Post.create({ title: 'Hello World' });
+    let commentOne = await Comment.create({ body: 'Great post' });
+    let commentTwo = await Comment.create({ body: 'Terrible post' });
     await post.setComments([ commentOne, commentTwo ]);
-    
-    post = await db.find('post', post.id);
+
+    post = await Post.find(post.id);
     await post.removeComment(commentTwo);
     let comments = await post.getComments();
     t.is(comments.length, 1);
