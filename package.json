@@ -1,6 +1,6 @@
 {
   "name": "@denali-js/orm-adapter-tests",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A test suite for Denali orm adapters",
   "main": "dist/index.js",
   "scripts": {
@@ -19,11 +19,12 @@
   },
   "homepage": "https://github.com/denali-js/orm-adapter-tests#readme",
   "devDependencies": {
+    "standard-version": "^4.3.0",
     "tslint": "^5.5.0",
     "typescript": "^2.4.2"
   },
   "dependencies": {
-    "@denali-js/core": "^0.1.0"
+    "@denali-js/core": "^0.1.1"
   },
   "types": "dist/index.d.ts"
 }
